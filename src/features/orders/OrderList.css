@@ -1,0 +1,382 @@
+.order-list-container {
+  max-width: 1200px;
+  margin: 20px auto;
+  padding: 20px;
+}
+
+.order-list-container h2 {
+  font-size: 24px;
+  font-weight: 600;
+  margin-bottom: 20px;
+}
+
+.order-list-filter {
+  margin-bottom: 20px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.order-list-filter label {
+  font-size: 14px;
+  font-weight: 500;
+  color: #4a5568;
+}
+
+.order-status-select {
+  padding: 8px;
+  font-size: 14px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  outline: none;
+  cursor: pointer;
+}
+
+.order-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 20px;
+}
+
+.order-table th,
+.order-table td {
+  padding: 12px;
+  border: 1px solid #e2e8f0;
+  text-align: left;
+}
+
+.order-table th:nth-child(1),
+.order-table td:nth-child(1) {
+  width: 10%; /* Mã đơn hàng */
+}
+
+.order-table th:nth-child(2),
+.order-table td:nth-child(2) {
+  width: 12%; /* Trạng thái đơn hàng */
+}
+
+.order-table th:nth-child(3),
+.order-table td:nth-child(3) {
+  width: 10%; /* Phương thức thanh toán */
+}
+
+.order-table th:nth-child(4),
+.order-table td:nth-child(4) {
+  width: 10%; /* Trạng thái thanh toán */
+}
+
+.order-table th:nth-child(5),
+.order-table td:nth-child(5) {
+  width: 10%; /* Trạng thái hoàn tiền */
+}
+
+.order-table th:nth-child(6),
+.order-table td:nth-child(6) {
+  width: 10%; /* Thời gian hoàn tiền */
+}
+
+.order-table th:nth-child(7),
+.order-table td:nth-child(7) {
+  width: 15%; /* Địa chỉ */
+}
+
+.order-table th:nth-child(8),
+.order-table td:nth-child(8) {
+  width: 8%; /* Số điện thoại */
+}
+
+.order-table th:nth-child(9),
+.order-table td:nth-child(9) {
+  width: 10%; /* Ngày đặt hàng */
+}
+
+.order-table th:nth-child(10),
+.order-table td:nth-child(10) {
+  width: 8%; /* Tổng tiền */
+}
+
+.order-table th:nth-child(11),
+.order-table td:nth-child(11) {
+  width: 17%; /* Hành động */
+}
+
+.order-table th {
+  background-color: #f1f5f9;
+  font-weight: 600;
+  color: #4a5568;
+}
+
+.order-table td {
+  font-size: 14px;
+  color: #4a5568;
+}
+
+.order-status-badge,
+.payment-method-badge,
+.payment-status-badge,
+.refund-status-badge {
+  padding: 4px 8px;
+  border-radius: 12px;
+  font-size: 12px;
+  font-weight: 500;
+  color: #1f2937;
+  white-space: nowrap;
+}
+
+/* Order Status */
+.order-status-pending {
+  background-color: #fefcbf; /* Vàng nhạt */
+}
+
+.order-status-rejected {
+  background-color: #fecaca; /* Đỏ nhạt */
+}
+
+.order-status-in_preparation {
+  background-color: #bfdbfe; /* Xanh dương nhạt */
+}
+
+.order-status-ready_to_ship {
+  background-color: #a5f3fc; /* Xanh lam nhạt */
+}
+
+.order-status-delivering {
+  background-color: #e9d5ff; /* Tím nhạt */
+}
+
+.order-status-delivered {
+  background-color: #bbf7d0; /* Xanh lá nhạt */
+}
+
+.order-status-cancelled {
+  background-color: #e5e7eb; /* Xám nhạt */
+}
+
+.order-status-failed_delivery {
+  background-color: #fed7aa; /* Cam nhạt */
+}
+
+.order-status-returned {
+  background-color: #d7ccc8; /* Nâu nhạt */
+}
+
+/* Payment Method */
+.payment-method-card {
+  background-color: #bfdbfe; /* Xanh dương */
+}
+
+.payment-method-cod {
+  background-color: #bbf7d0; /* Xanh lá */
+}
+
+/* Payment Status */
+.payment-status-success {
+  background-color: #bbf7d0; /* Xanh lá nhạt */
+}
+
+.payment-status-pending {
+  background-color: #fefcbf; /* Vàng nhạt */
+}
+
+.payment-status-failed {
+  background-color: #fecaca; /* Đỏ nhạt */
+}
+
+/* Refund Status */
+.refund-status-none {
+  background-color: #e5e7eb; /* Xám nhạt */
+}
+
+.refund-status-pending_refund {
+  background-color: #fefcbf; /* Vàng nhạt */
+}
+
+.refund-status-refunded {
+  background-color: #bbf7d0; /* Xanh lá nhạt */
+}
+
+.refund-status-failed_refund {
+  background-color: #fecaca; /* Đỏ nhạt */
+}
+
+.order-actions {
+  display: flex;
+  gap: 8px;
+  flex-wrap: nowrap;
+  align-items: center;
+}
+
+.order-action-details {
+  background-color: #10b981;
+  color: white;
+  padding: 8px 12px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 12px;
+  white-space: nowrap;
+}
+
+.order-action-details:hover {
+  background-color: #059669;
+}
+
+.order-action-approve {
+  background-color: #3b82f6;
+  color: white;
+  padding: 8px 12px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 12px;
+  white-space: nowrap;
+}
+
+.order-action-approve:hover {
+  background-color: #2563eb;
+}
+
+.order-action-cancel {
+  background-color: #ef4444;
+  color: white;
+  padding: 8px 12px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 12px;
+  white-space: nowrap;
+}
+
+.order-action-cancel:hover {
+  background-color: #dc2626;
+}
+
+.order-details {
+  padding: 16px;
+  background-color: #f7fafc;
+  border: 1px solid #e2e8f0;
+  border-radius: 4px;
+  margin-bottom: 16px;
+}
+
+.order-details-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.order-details-table th,
+.order-details-table td {
+  padding: 8px;
+  border: 1px solid #e2e8f0;
+  text-align: left;
+}
+
+.order-details-table th {
+  background-color: #f1f5f9;
+  font-weight: 600;
+  color: #4a5568;
+}
+
+.order-detail-image {
+  width: 60px;
+  height: 60px;
+  object-fit: contain;
+  border-radius: 4px;
+}
+
+.order-pagination {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+}
+
+.pagination-button {
+  background-color: #3b82f6;
+  color: white;
+  padding: 8px 16px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.pagination-button:hover {
+  background-color: #2563eb;
+}
+
+.pagination-button:disabled {
+  background-color: #cccccc;
+  cursor: not-allowed;
+}
+
+.order-modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.order-modal-content {
+  background-color: #fff;
+  padding: 20px;
+  border-radius: 8px;
+  width: 400px;
+  max-width: 90%;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.order-modal-content h3 {
+  font-size: 18px;
+  font-weight: bold;
+  margin-bottom: 15px;
+  color: #333;
+}
+
+.order-reject-reason {
+  width: 100%;
+  padding: 10px;
+  font-size: 14px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  resize: vertical;
+  margin-bottom: 15px;
+}
+
+.order-modal-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+}
+
+.order-modal-button {
+  padding: 8px 15px;
+  font-size: 14px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.order-modal-cancel {
+  background-color: #6c757d;
+  color: #fff;
+}
+
+.order-modal-cancel:hover {
+  background-color: #5a6268;
+}
+
+.order-modal-confirm {
+  background-color: #ef4444;
+  color: #fff;
+}
+
+.order-modal-confirm:hover {
+  background-color: #dc2626;
+}
