@@ -4,7 +4,7 @@ import { logoutUser } from '../features/auth/authSlice';
 import { toast } from 'react-toastify';
 
 const api = axios.create({
-  baseURL: 'http://localhost:8080/api',
+  baseURL: 'https://api.erotskoob.xyz/api',
 });
 
 api.interceptors.request.use(
@@ -43,7 +43,7 @@ api.interceptors.response.use(
 
       try {
         console.log('Gửi yêu cầu refresh token...');
-        const response = await axios.post('http://localhost:8080/api/auth/refresh-access-token', {
+        const response = await axios.post('https://api.erotskoob.xyz/api/auth/refresh-access-token', {
           token: refreshToken,
         });
         console.log('Refresh token thành công:', response.data);
