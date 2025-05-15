@@ -11,6 +11,7 @@ export const loginUser = createAsyncThunk(
         const { accessToken, refreshToken, username } = response.data.result;
         localStorage.setItem('accessToken', accessToken);
         localStorage.setItem('refreshToken', refreshToken);
+        localStorage.setItem('username', username); // Lưu username vào localStorage
         toast.success('Đăng nhập thành công!');
         return { username };
       }
@@ -39,6 +40,7 @@ export const logoutUser = createAsyncThunk(
       if (response.status === 200) {
         localStorage.removeItem('accessToken');
         localStorage.removeItem('refreshToken');
+        localStorage.removeItem('username'); // Xóa username khi đăng xuất
         toast.success('Đăng xuất thành công!');
         return true;
       }
@@ -48,6 +50,7 @@ export const logoutUser = createAsyncThunk(
       toast.error(message);
       localStorage.removeItem('accessToken');
       localStorage.removeItem('refreshToken');
+      localStorage.removeItem('username'); // Xóa username khi có lỗi
       return rejectWithValue(message);
     }
   }
@@ -56,7 +59,7 @@ export const logoutUser = createAsyncThunk(
 const authSlice = createSlice({
   name: 'auth',
   initialState: {
-    user: null,
+    user: localStorage.getItem('username') ? { username: localStorage.getItem('username') } : null,
     isAuthenticated: !!localStorage.getItem('accessToken'),
     loading: false,
     error: null,

@@ -110,6 +110,7 @@ const OrderList = () => {
     try {
       await dispatch(updateOrderStatus({ orderId, fromStatus, toStatus })).unwrap();
     } catch (error) {
+      toast.dismiss();
       toast.error(error || 'Lỗi khi cập nhật trạng thái đơn hàng!');
     }
   };
@@ -117,6 +118,7 @@ const OrderList = () => {
   const handleRejectOrder = async () => {
     const { orderId, fromStatus, cause } = rejectOrderData;
     if (!cause.trim()) {
+      toast.dismiss();
       toast.error('Vui lòng nhập lý do từ chối!');
       return;
     }
@@ -126,6 +128,7 @@ const OrderList = () => {
       ).unwrap();
       handleCloseRejectModal();
     } catch (error) {
+      toast.dismiss();
       toast.error(error || 'Lỗi khi từ chối đơn hàng!');
     }
   };
@@ -139,6 +142,7 @@ const OrderList = () => {
       try {
         await dispatch(fetchOrderDetails(orderId)).unwrap();
       } catch (error) {
+        toast.dismiss();
         toast.error(error || 'Lỗi khi lấy chi tiết đơn hàng!');
       }
     }

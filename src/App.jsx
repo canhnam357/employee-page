@@ -17,7 +17,19 @@ function App() {
             <Route path="/" element={<Login />} />
           </Routes>
         </div>
-        <ToastContainer />
+        <ToastContainer
+      position="top-right"
+      autoClose={3000}
+      hideProgressBar={false}
+      newestOnTop={false}
+      closeOnClick
+      rtl={false}
+      pauseOnFocusLoss
+      draggable
+      pauseOnHover
+      className="custom-toast-container"
+      style={{ zIndex: 99999 }} // Tăng z-index để đảm bảo không bị che
+    />
       </div>
     </Router>
   );

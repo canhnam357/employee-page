@@ -34,6 +34,7 @@ export const updateOrderStatus = createAsyncThunk(
           REJECTED: 'Bị từ chối',
           RETURNED: 'Đã hoàn hàng',
         };
+        toast.dismiss();
         toast.success(`Đã cập nhật trạng thái đơn hàng thành ${statusLabels[toStatus] || toStatus}!`);
         const { currentPage, pageSize, orderStatusFilter } = getState().orders;
         dispatch(fetchOrders({ index: currentPage, size: pageSize, orderStatus: orderStatusFilter }));
@@ -113,6 +114,7 @@ const orderSlice = createSlice({
       .addCase(fetchOrders.rejected, (state, action) => {
         state.loading = false;
         state.error = action.payload;
+        toast.dismiss();
         toast.error(action.payload);
       })
       .addCase(updateOrderStatus.pending, (state) => {
@@ -137,6 +139,7 @@ const orderSlice = createSlice({
       .addCase(fetchOrderDetails.rejected, (state, action) => {
         state.loadingDetails = false;
         state.errorDetails = action.payload;
+        toast.dismiss();
         toast.error(action.payload);
       });
   },

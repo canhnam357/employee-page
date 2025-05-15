@@ -6,3 +6,9 @@
 .main-content {
   padding: 20px;
 }
+
+.custom-toast-container {
+  top: 80px !important; /* Điều chỉnh dựa trên chiều cao header (62px) + khoảng cách */
+  right: 20px !important;
+  z-index: 10000 !important; /* Đảm bảo toast hiển thị trên header */
+}
