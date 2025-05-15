@@ -159,7 +159,7 @@ const OrderList = () => {
   };
 
   if (!isAuthenticated) {
-    navigate('/employee/login');
+    navigate('/');
     return null;
   }
 

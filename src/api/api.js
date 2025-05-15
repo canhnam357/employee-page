@@ -37,7 +37,7 @@ api.interceptors.response.use(
         localStorage.removeItem('refreshToken');
         store.dispatch(logoutUser());
         toast.error('Phiên đăng nhập đã hết hạn. Vui lòng đăng nhập lại!');
-        window.location.href = '/employee/login';
+        window.location.href = '/';
         return Promise.reject(new Error('Không tìm thấy refresh token'));
       }
 
@@ -58,7 +58,7 @@ api.interceptors.response.use(
         localStorage.removeItem('refreshToken');
         store.dispatch(logoutUser());
         toast.error('Phiên đăng nhập đã hết hạn. Vui lòng đăng nhập lại!');
-        window.location.href = '/employee/login';
+        window.location.href = '/';
         return Promise.reject(refreshError);
       }
     }

@@ -10,7 +10,7 @@ const Header = () => {
 
   const handleLogout = () => {
     dispatch(logoutUser());
-    navigate('/employee/login');
+    navigate('/');
   };
 
   return (
