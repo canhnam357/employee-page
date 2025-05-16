@@ -167,6 +167,27 @@ const OrderList = () => {
     return null;
   }
 
+  const formatOrderAt = (dateString) => {
+    if (!dateString) return 'N/A';
+    const dateRegex = /^(\d{2}):(\d{2}):(\d{2}) (\d{2})-(\d{2})-(\d{4})$/;
+    if (dateRegex.test(dateString)) {
+      return dateString; // Giữ nguyên nếu đúng định dạng
+    }
+    try {
+      const date = new Date(dateString);
+      if (isNaN(date.getTime())) return 'N/A';
+      const hours = String(date.getHours()).padStart(2, '0');
+      const minutes = String(date.getMinutes()).padStart(2, '0');
+      const seconds = String(date.getSeconds()).padStart(2, '0');
+      const day = String(date.getDate()).padStart(2, '0');
+      const month = String(date.getMonth() + 1).padStart(2, '0');
+      const year = date.getFullYear();
+      return `${hours}:${minutes}:${seconds} ${day}-${month}-${year}`;
+    } catch {
+      return 'N/A';
+    }
+  };
+
   if (loading) return <p>Đang tải danh sách đơn hàng...</p>;
 
   return (
@@ -228,11 +249,11 @@ const OrderList = () => {
                       </span>
                     </td>
                     <td>
-                      {order.refundAt ? new Date(order.refundAt).toLocaleString('vi-VN') : '-'}
+                      {order.refundAt ? formatOrderAt(order.refundAt) : '-'}
                     </td>
                     <td>{truncateAddress(order.address)}</td>
                     <td>{order.phoneNumber}</td>
-                    <td>{new Date(order.orderAt).toLocaleString('vi-VN')}</td>
+                    <td>{formatOrderAt(order.orderAt)}</td>
                     <td>{order.totalPrice.toLocaleString('vi-VN')} VNĐ</td>
                     <td>
                       <div className="order-actions">
