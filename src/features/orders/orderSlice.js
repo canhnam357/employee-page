@@ -19,6 +19,12 @@ export const fetchOrders = createAsyncThunk(
         localStorage.removeItem('refreshToken');
         return rejectWithValue('Bạn không có quyền truy cập tài nguyên này!');
       }
+      if (error.response?.status === 401) {
+        dispatch(logoutUser());
+        localStorage.removeItem('accessToken');
+        localStorage.removeItem('refreshToken');
+        return rejectWithValue('Hết thời gian đăng nhập. Vui lòng đăng nhập lại!');
+      }
       return rejectWithValue(message);
     }
   }
