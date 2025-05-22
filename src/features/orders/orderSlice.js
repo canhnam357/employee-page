@@ -1,10 +1,11 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import api from '../../api/api';
 import { toast } from 'react-toastify';
+import { logoutUser } from '../auth/authSlice';
 
 export const fetchOrders = createAsyncThunk(
   'orders/fetchOrders',
-  async ({ index = 1, size = 10, orderStatus = '' }, { rejectWithValue }) => {
+  async ({ index = 1, size = 10, orderStatus = '' }, { rejectWithValue, dispatch }) => {
     try {
       const response = await api.get('/employee/orders', {
         params: { index, size, orderStatus },
@@ -12,6 +13,12 @@ export const fetchOrders = createAsyncThunk(
       return response.data.result;
     } catch (error) {
       const message = error.response?.data?.message || 'Không thể lấy danh sách đơn hàng!';
+      if (error.response?.status === 403) {
+        dispatch(logoutUser());
+        localStorage.removeItem('accessToken');
+        localStorage.removeItem('refreshToken');
+        return rejectWithValue('Bạn không có quyền truy cập tài nguyên này!');
+      }
       return rejectWithValue(message);
     }
   }
