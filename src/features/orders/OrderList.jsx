@@ -163,7 +163,7 @@ const OrderList = () => {
   };
 
   if (!isAuthenticated) {
-    navigate('/');
+    navigate('/login');
     return null;
   }
 

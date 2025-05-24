@@ -23,6 +23,7 @@ api.interceptors.response.use(
   async (error) => {
     const originalRequest = error.config;
 
+    // Xử lý lỗi 401 (Unauthorized)
     if (
       (error.response?.status === 401 || error.response?.data?.statusCode === 401) &&
       !originalRequest._retry
@@ -38,7 +39,7 @@ api.interceptors.response.use(
         store.dispatch(logoutUser());
         toast.dismiss();
         toast.error('Phiên đăng nhập đã hết hạn. Vui lòng đăng nhập lại!');
-        window.location.href = '/';
+        window.location.href = '/login';
         return Promise.reject(new Error('Không tìm thấy refresh token'));
       }
 
@@ -60,16 +61,23 @@ api.interceptors.response.use(
         store.dispatch(logoutUser());
         toast.dismiss();
         toast.error('Phiên đăng nhập đã hết hạn. Vui lòng đăng nhập lại!');
-        window.location.href = '/';
+        window.location.href = '/login';
         return Promise.reject(refreshError);
       }
     }
 
-    if (error.response) {
-      console.error('Lỗi API:', error.response.data);
+    // Xử lý lỗi 403 (Forbidden)
+    if (error.response?.status === 403 || error.response?.data?.statusCode === 403) {
+      console.log('Lỗi 403: Quyền truy cập bị từ chối, đăng xuất...');
+      localStorage.removeItem('accessToken');
+      localStorage.removeItem('refreshToken');
+      store.dispatch(logoutUser());
       toast.dismiss();
-      toast.error(error.response.data.message || 'Đã có lỗi xảy ra, vui lòng thử lại!');
+      toast.error('Quyền truy cập bị từ chối. Vui lòng đăng nhập lại!');
+      window.location.href = '/login';
+      return Promise.reject(new Error('Quyền truy cập bị từ chối'));
     }
+
     return Promise.reject(error);
   }
 );
