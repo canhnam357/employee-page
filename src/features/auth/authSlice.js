@@ -2,6 +2,23 @@ import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import api from '../../api/api';
 import { toast } from 'react-toastify';
 
+const decodeJWT = (token) => {
+    try {
+        const base64Url = token.split('.')[1]; // Lấy phần Payload
+        const base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/'); // Thay thế ký tự
+        const jsonPayload = decodeURIComponent(
+            atob(base64)
+                .split('')
+                .map((c) => '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2))
+                .join('')
+        );
+        return JSON.parse(jsonPayload); // Trả về object payload
+    } catch (error) {
+        console.error('Lỗi giải mã JWT:', error);
+        return null;
+    }
+};
+
 export const loginUser = createAsyncThunk(
   'auth/loginUser',
   async ({ email, password }, { rejectWithValue }) => {
@@ -9,6 +26,13 @@ export const loginUser = createAsyncThunk(
       const response = await api.post('/auth/login', { email, password });
       if (response.data.success) {
         const { accessToken, refreshToken, username } = response.data.result;
+        const decode = decodeJWT(accessToken);
+        if (decode.user_role !== "ADMIN" && decode.user_role !== "EMPLOYEE") {
+          const message = 'Bạn không có quyền truy cập';
+          toast.dismiss();
+          toast.error(message);
+          return rejectWithValue(message);
+        }
         localStorage.setItem('accessToken', accessToken);
         localStorage.setItem('refreshToken', refreshToken);
         localStorage.setItem('username', username); // Lưu username vào localStorage
