@@ -15,6 +15,7 @@ function App() {
           <Routes>
             <Route path="/" element={<OrderList />} />
             <Route path="/login" element={<Login />} />
+            <Route path="*" element={<Navigate to="/" replace />} />
           </Routes>
         </div>
         <ToastContainer
