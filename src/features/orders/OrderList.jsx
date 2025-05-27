@@ -162,10 +162,11 @@ const OrderList = () => {
     return true;
   };
 
-  if (!isAuthenticated) {
-    navigate('/login');
-    return null;
-  }
+  useEffect(() => {
+    if (!isAuthenticated) {
+      navigate('/login');
+    }
+  }, [isAuthenticated, navigate]);
 
   const formatOrderAt = (dateString) => {
     if (!dateString) return 'N/A';
