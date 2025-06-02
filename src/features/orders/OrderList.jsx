@@ -109,6 +109,7 @@ const OrderList = () => {
     }
     try {
       await dispatch(updateOrderStatus({ orderId, fromStatus, toStatus })).unwrap();
+      toast.success('Cập nhật trạng thái đơn hàng thành công!');
     } catch (error) {
       toast.dismiss();
       toast.error(error || 'Lỗi khi cập nhật trạng thái đơn hàng!');
@@ -127,6 +128,7 @@ const OrderList = () => {
         updateOrderStatus({ orderId, fromStatus, toStatus: 'REJECTED', cause })
       ).unwrap();
       handleCloseRejectModal();
+      toast.success('Từ chối đơn hàng thành công!');
     } catch (error) {
       toast.dismiss();
       toast.error(error || 'Lỗi khi từ chối đơn hàng!');
@@ -172,7 +174,7 @@ const OrderList = () => {
     if (!dateString) return 'N/A';
     const dateRegex = /^(\d{2}):(\d{2}):(\d{2}) (\d{2})-(\d{2})-(\d{4})$/;
     if (dateRegex.test(dateString)) {
-      return dateString; // Giữ nguyên nếu đúng định dạng
+      return dateString;
     }
     try {
       const date = new Date(dateString);
@@ -361,15 +363,28 @@ const OrderList = () => {
         <div className="order-modal">
           <div className="order-modal-content">
             <h3>Lý do từ chối đơn hàng</h3>
-            <textarea
-              className="order-reject-reason"
-              value={rejectOrderData.cause}
-              onChange={(e) =>
-                setRejectOrderData({ ...rejectOrderData, cause: e.target.value })
-              }
-              placeholder="Nhập lý do từ chối đơn hàng..."
-              rows="4"
-            />
+            <div className="order-reject-reason-container">
+              <textarea
+                className="order-reject-reason"
+                value={rejectOrderData.cause}
+                onChange={(e) =>
+                  setRejectOrderData({
+                    ...rejectOrderData,
+                    cause: e.target.value.slice(0, 500),
+                  })
+                }
+                placeholder="Nhập lý do từ chối đơn hàng (tối đa 500 ký tự)"
+                rows="12"
+                maxLength="500"
+              />
+              <span
+                className={`order-reject-char-count ${
+                  rejectOrderData.cause.length === 500 ? 'char-count-max' : ''
+                }`}
+              >
+                {rejectOrderData.cause.length}/500
+              </span>
+            </div>
             <div className="order-modal-actions">
               <button
                 className="order-modal-button order-modal-cancel"

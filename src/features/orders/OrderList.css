@@ -338,14 +338,40 @@
   color: #333;
 }
 
+.order-reject-reason-container {
+  position: relative;
+  margin-bottom: 15px;
+  padding: 0 10px; /* Căn đều hai bên */
+}
+
 .order-reject-reason {
   width: 100%;
   padding: 10px;
   font-size: 14px;
-  border: 1px solid #ddd;
+  font-family: 'Poppins', sans-serif;
+  border: 1px solid #d1d5db;
   border-radius: 4px;
   resize: vertical;
-  margin-bottom: 15px;
+  outline: none;
+  box-sizing: border-box;
+  transition: border-color 0.2s;
+}
+
+.order-reject-reason:focus {
+  border-color: #3b82f6;
+}
+
+.order-reject-char-count {
+  position: absolute;
+  bottom: 8px;
+  right: 18px; /* Căn chỉnh với padding của container */
+  font-size: 12px;
+  font-family: 'Poppins', sans-serif;
+  color: #4a5568;
+}
+
+.order-reject-char-count.char-count-max {
+  color: #ef4444;
 }
 
 .order-modal-actions {
