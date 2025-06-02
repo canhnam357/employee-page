@@ -23,9 +23,9 @@ export const loginUser = createAsyncThunk(
   'auth/loginUser',
   async ({ email, password }, { rejectWithValue }) => {
     try {
-      const response = await api.post('/auth/login', { email, password });
+      const response = await api.post('/auth/login', { email, password }, { withCredentials: true });
       if (response.data.success) {
-        const { accessToken, refreshToken, username } = response.data.result;
+        const { accessToken, username } = response.data.result;
         const decode = decodeJWT(accessToken);
         if (decode.user_role !== "ADMIN" && decode.user_role !== "EMPLOYEE") {
           const message = 'Bạn không có quyền truy cập';
@@ -34,7 +34,6 @@ export const loginUser = createAsyncThunk(
           return rejectWithValue(message);
         }
         localStorage.setItem('accessToken', accessToken);
-        localStorage.setItem('refreshToken', refreshToken);
         localStorage.setItem('username', username); // Lưu username vào localStorage
         toast.success('Đăng nhập thành công!');
         return { username };
@@ -59,11 +58,9 @@ export const logoutUser = createAsyncThunk(
   'auth/logoutUser',
   async (_, { rejectWithValue }) => {
     try {
-      const refreshToken = localStorage.getItem('refreshToken');
-      const response = await api.post('/auth/logout', null, { params: { refreshToken } });
+      const response = await api.post('/auth/logout', null, {withCredentials: true});
       if (response.status === 200) {
         localStorage.removeItem('accessToken');
-        localStorage.removeItem('refreshToken');
         localStorage.removeItem('username'); // Xóa username khi đăng xuất
         toast.success('Đăng xuất thành công!');
         return true;
@@ -73,7 +70,6 @@ export const logoutUser = createAsyncThunk(
       const message = error.response?.data?.message || 'Đăng xuất thất bại!';
       toast.error(message);
       localStorage.removeItem('accessToken');
-      localStorage.removeItem('refreshToken');
       localStorage.removeItem('username'); // Xóa username khi có lỗi
       return rejectWithValue(message);
     }

@@ -61,26 +61,12 @@ api.interceptors.response.use(
       originalRequest._retry = true;
       isRefreshing = true;
 
-      const refreshToken = localStorage.getItem('refreshToken');
-      if (!refreshToken) {
-        localStorage.removeItem('accessToken');
-        localStorage.removeItem('refreshToken');
-        store.dispatch(logoutUser());
-        toast.dismiss();
-        toast.error('Phiên đăng nhập đã hết hạn. Vui lòng đăng nhập lại!');
-        window.location.href = '/login';
-        return Promise.reject(new Error('Không tìm thấy refresh token'));
-      }
-
       return new Promise(function (resolve, reject) {
         axios
-          .post(process.env.REACT_APP_API_URL_BASE + '/auth/refresh-access-token', {
-            token: refreshToken,
-          })
+          .post(process.env.REACT_APP_API_URL_BASE + '/auth/refresh-access-token', {}, { withCredentials: true })
           .then(({ data }) => {
-            const { accessToken, refreshToken: newRefreshToken } = data.result;
+            const { accessToken } = data.result;
             localStorage.setItem('accessToken', accessToken);
-            localStorage.setItem('refreshToken', newRefreshToken);
             api.defaults.headers.common['Authorization'] = `Bearer ${accessToken}`;
             processQueue(null, accessToken);
             originalRequest.headers['Authorization'] = 'Bearer ' + accessToken;
@@ -89,7 +75,6 @@ api.interceptors.response.use(
           .catch((err) => {
             processQueue(err, null);
             localStorage.removeItem('accessToken');
-            localStorage.removeItem('refreshToken');
             store.dispatch(logoutUser());
             toast.dismiss();
             toast.error('Phiên đăng nhập đã hết hạn. Vui lòng đăng nhập lại!');
@@ -105,7 +90,6 @@ api.interceptors.response.use(
     // Xử lý lỗi 403 (Forbidden)
     if (error.response?.status === 403 || error.response?.data?.statusCode === 403) {
       localStorage.removeItem('accessToken');
-      localStorage.removeItem('refreshToken');
       store.dispatch(logoutUser());
       toast.dismiss();
       toast.error('Quyền truy cập bị từ chối. Vui lòng đăng nhập lại!');
