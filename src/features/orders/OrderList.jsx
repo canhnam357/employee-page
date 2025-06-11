@@ -109,7 +109,6 @@ const OrderList = () => {
     }
     try {
       await dispatch(updateOrderStatus({ orderId, fromStatus, toStatus })).unwrap();
-      toast.success('Cập nhật trạng thái đơn hàng thành công!');
     } catch (error) {
       toast.dismiss();
       toast.error(error || 'Lỗi khi cập nhật trạng thái đơn hàng!');
@@ -128,7 +127,6 @@ const OrderList = () => {
         updateOrderStatus({ orderId, fromStatus, toStatus: 'REJECTED', cause })
       ).unwrap();
       handleCloseRejectModal();
-      toast.success('Từ chối đơn hàng thành công!');
     } catch (error) {
       toast.dismiss();
       toast.error(error || 'Lỗi khi từ chối đơn hàng!');
