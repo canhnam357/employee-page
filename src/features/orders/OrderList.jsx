@@ -294,36 +294,43 @@ const OrderList = () => {
                           {loadingDetails ? (
                             <p>Đang tải chi tiết đơn hàng...</p>
                           ) : orderDetails.length > 0 ? (
-                            <table className="order-details-table">
-                              <thead>
-                                <tr>
-                                  <th>Ảnh bìa</th>
-                                  <th>Tên sách</th>
-                                  <th>Số lượng</th>
-                                  <th>Tổng tiền</th>
-                                </tr>
-                              </thead>
-                              <tbody>
-                                {orderDetails.map((detail) => (
-                                  <tr key={detail.orderDetailId}>
-                                    <td>
-                                      {detail.urlThumbnail ? (
-                                        <img
-                                          src={detail.urlThumbnail}
-                                          alt={detail.bookName}
-                                          className="order-detail-image"
-                                        />
-                                      ) : (
-                                        'Không có ảnh'
-                                      )}
-                                    </td>
-                                    <td>{detail.bookName}</td>
-                                    <td>{detail.quantity}</td>
-                                    <td>{detail.totalPrice.toLocaleString('vi-VN')} VNĐ</td>
+                            <>
+                              <div className="order-details-info">
+                                <p><strong>Họ và tên:</strong> {order.fullName}</p>
+                                <p className="wrapped-text"><strong>Địa chỉ:</strong> {order.address}</p>
+                                <p><strong>Số điện thoại:</strong> {order.phoneNumber}</p>
+                              </div>
+                              <table className="order-details-table">
+                                <thead>
+                                  <tr>
+                                    <th>Ảnh bìa</th>
+                                    <th>Tên sách</th>
+                                    <th>Số lượng</th>
+                                    <th>Tổng tiền</th>
                                   </tr>
-                                ))}
-                              </tbody>
-                            </table>
+                                </thead>
+                                <tbody>
+                                  {orderDetails.map((detail) => (
+                                    <tr key={detail.orderDetailId}>
+                                      <td>
+                                        {detail.urlThumbnail ? (
+                                          <img
+                                            src={detail.urlThumbnail}
+                                            alt={detail.bookName}
+                                            className="order-detail-image"
+                                          />
+                                        ) : (
+                                          'Không có ảnh'
+                                        )}
+                                      </td>
+                                      <td>{detail.bookName}</td>
+                                      <td>{detail.quantity}</td>
+                                      <td>{detail.totalPrice.toLocaleString('vi-VN')} VNĐ</td>
+                                    </tr>
+                                  ))}
+                                </tbody>
+                              </table>
+                            </>
                           ) : (
                             <p>Không có chi tiết đơn hàng!</p>
                           )}
